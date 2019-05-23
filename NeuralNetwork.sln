@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetwork", "NeuralNetwork\NeuralNetwork.csproj", "{AFFE2902-DA2E-42CC-9B23-D56B9B75F0BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFFE2902-DA2E-42CC-9B23-D56B9B75F0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFFE2902-DA2E-42CC-9B23-D56B9B75F0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFFE2902-DA2E-42CC-9B23-D56B9B75F0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFFE2902-DA2E-42CC-9B23-D56B9B75F0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
