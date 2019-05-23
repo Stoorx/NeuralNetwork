@@ -21,7 +21,7 @@ namespace NeuralNetwork
             var result = new List<double>();
             foreach (var neuron in Neurons)
             {
-                result.Add(last ? neuron.Calculate(input) : neuron.CalculateLast(input));
+                result.Add(!last ? neuron.Calculate(input) : neuron.CalculateLast(input));
             }
 
             return result;

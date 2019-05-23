@@ -41,6 +41,8 @@ namespace NeuralNetwork
 
         public List<double> Calculate(List<double> input)
         {
+            if (input.Count != _inputsCount)
+                throw new Exception("Inputs count does not match NN inputs.");
             var currInput = input;
             foreach (var layer in _layers)
             {

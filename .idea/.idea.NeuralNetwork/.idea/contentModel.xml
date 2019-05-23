@@ -6,6 +6,7 @@
     <e p="E:\Repos\NeuralNetwork" t="IncludeFlat">
       <e p="NeuralNetwork" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Dataset.cs" t="Include" />
         <e p="NeuralNetwork.cs" t="Include" />
         <e p="NeuralNetwork.csproj" t="IncludeRecursive" />
         <e p="Neuron.cs" t="Include" />
