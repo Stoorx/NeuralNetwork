@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace NeuralNetwork
 {
@@ -9,16 +8,16 @@ namespace NeuralNetwork
 
         public static void Main(string[] args)
         {
-//            NeuralNetwork nn = new NeuralNetwork(1, 10, 3, 10);
-//            Console.WriteLine(nn);
-//            
-            Dataset ds = new Dataset(50,
-                x => { return new List<double> {TargetFunction(x[0])}; },
-                new List<Tuple<double, double>> {new Tuple<double, double>(-10.0, 10.0)}
-            );
-            //Console.WriteLine(ds);
+            NeuralNetwork nn = new NeuralNetwork(1, 10, 3, 10);
+            Console.WriteLine(nn);
 
-            Console.WriteLine(new Dataset(ds.GetBatch(0.1)));
+//            Dataset ds = new Dataset(50,
+//                x => { return new List<double> {TargetFunction(x[0])}; },
+//                new List<Tuple<double, double>> {new Tuple<double, double>(-10.0, 10.0)}
+//            );
+//            //Console.WriteLine(ds);
+//
+//            Console.WriteLine(new Dataset(ds.GetBatch(0.1)));
         }
     }
 }

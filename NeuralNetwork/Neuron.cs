@@ -8,6 +8,9 @@ namespace NeuralNetwork
     public class Neuron
     {
         private static readonly Random Random = new Random();
+        public double Delta = 0;
+
+        public double Error = 0;
 
         public List<double> InputWeights;
 
@@ -16,7 +19,7 @@ namespace NeuralNetwork
             InputWeights = new List<double>(inputsCount + 1);
             for (var i = 0; i < inputsCount + 1; i++)
             {
-                InputWeights.Add(Random.NextDouble());
+                InputWeights.Add(Random.NextDouble() - 0.5);
             }
         }
 
@@ -24,10 +27,10 @@ namespace NeuralNetwork
 //        public List<double> Corrections    = new List<double>();
 //        public List<double> QSum           = new List<double>();
 //
-//        private double _sum   = 0;
-//        private double _func  = 0;
-//        private double _error = 0;
-//        private double _delta = 0;
+        public double SumCache { get; protected set; }
+
+        public double ActivatedCache { get; protected set; }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -41,15 +44,20 @@ namespace NeuralNetwork
         {
             for (var i = 0; i < count; i++)
             {
-                InputWeights.Add(Random.NextDouble());
+                InputWeights.Add(Random.NextDouble() - 0.5);
             }
         }
 
         public double Calculate(IEnumerable<double> input) =>
-            NeuralNetwork.ActivationFunction(input.Select((t, i) => InputWeights[i] * t)
-                                                 .Sum() + InputWeights.Last());
+            ActivatedCache = NeuralNetwork.ActivationFunction(SumCache = input.Select((t, i) => InputWeights[i] * t)
+                                                                             .Sum() + InputWeights.Last());
 
-        public double CalculateLast(IEnumerable<double> input) => input.Select((t, i) => InputWeights[i] * t)
-                                                                      .Sum() + InputWeights.Last();
+        public double CalculateLast(IEnumerable<double> input) => ActivatedCache = SumCache =
+            input.Select((t, i) => InputWeights[i] * t)
+                .Sum() + InputWeights.Last();
+
+        public void BackPropagationErrorLast(double real)
+        {
+        }
     }
 }
