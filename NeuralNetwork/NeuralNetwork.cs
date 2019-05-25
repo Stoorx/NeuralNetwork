@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NeuralNetwork
@@ -31,7 +32,6 @@ namespace NeuralNetwork
         }
 
         public double LearningRate { get; set; }
-        public double Moment { get; set; }
 
         public static double ActivationFunction(double x) =>
             1.0 / (1.0 + Math.Exp(-x));
@@ -78,22 +78,46 @@ namespace NeuralNetwork
                 _lastLayer.Neurons[i].Delta = _lastLayer.Neurons[i].Error;
             }
 
-            for (int currentLayerIndex = _layers.Count - 1; currentLayerIndex >= 0; currentLayerIndex--)
+            // Calculate errors in hidden layers
+            for (var currentLayerIndex = _layers.Count - 1; currentLayerIndex >= 0; currentLayerIndex--)
             {
                 var currLayer = _layers[currentLayerIndex];
                 var nextLayer = (currentLayerIndex == _layers.Count - 1) ? _lastLayer : _layers[currentLayerIndex + 1];
 
-                for (int i = 0; i < currLayer.Neurons.Count; i++)
+                for (var i = 0; i < currLayer.Neurons.Count; i++)
                 {
-                    double currentError = 0.0;
-                    for (int j = 0; j < nextLayer.Neurons.Count; j++)
-                    {
-                        currentError += nextLayer.Neurons[j].Delta * nextLayer.Neurons[j].InputWeights[i];
-                    }
+                    var currentError = nextLayer.Neurons.Sum(t => t.Delta * t.InputWeights[i]);
 
                     currLayer.Neurons[i].Error = currentError;
                     currLayer.Neurons[i].Delta =
                         currentError * ActivationFunctionDerivative(currLayer.Neurons[i].SumCache);
+                }
+            }
+
+            // Change weights in last layer
+            foreach (var n in _lastLayer.Neurons)
+            {
+                for (var j = 0; j < n.InputWeights.Count - 1; j++)
+                {
+                    n.InputWeights[j] += 2 * n.Delta * LearningRate * _lastLayer.InputCache[j];
+                }
+
+                n.InputWeights[n.InputWeights.Count - 1] = 2 * n.Delta * LearningRate;
+            }
+
+            // Change weights in hidden layers
+            for (var currentLayerIndex = _layers.Count - 1; currentLayerIndex >= 0; currentLayerIndex--)
+            {
+                var currLayer = _layers[currentLayerIndex];
+
+                foreach (var n in currLayer.Neurons)
+                {
+                    for (var j = 0; j < n.InputWeights.Count - 1; j++)
+                    {
+                        n.InputWeights[j] += 2 * n.Delta * LearningRate * currLayer.InputCache[j];
+                    }
+
+                    n.InputWeights[n.InputWeights.Count - 1] = 2 * n.Delta * LearningRate;
                 }
             }
         }

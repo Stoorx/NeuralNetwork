@@ -16,8 +16,11 @@ namespace NeuralNetwork
             }
         }
 
+        public List<double> InputCache { get; protected set; }
+
         public List<double> Calculate(List<double> input, bool last = false)
         {
+            InputCache = input;
             var result = new List<double>();
             foreach (var neuron in Neurons)
             {
